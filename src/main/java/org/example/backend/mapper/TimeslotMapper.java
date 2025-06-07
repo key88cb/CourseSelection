@@ -55,6 +55,7 @@ public class TimeslotMapper {
         return timeslot; // Returns null if not found
     }
     public String getTimeinStr(String timeSlotIds){System.out.println("timeSlotIds = " + timeSlotIds);
+        if(timeSlotIds.equals("[]")) return "未知时间";
         String cleaned = timeSlotIds.replaceAll("[\\[\\]\\s]", "");
         String timeStr = "";
         String[] ids = cleaned.split(",");
@@ -63,7 +64,7 @@ public class TimeslotMapper {
         for (String id : ids) {
             int timeslotId = Integer.parseInt(id.trim());
             Timeslot timeslot = getTimeslotById(timeslotId);
-            if(lastTimeId%4==0 ||lastTimeId+1<timeslotId) {
+            if(lastTimeId%12==0 || lastTimeId%12==4 || lastTimeId%12==9 ||lastTimeId+1<timeslotId) {
                 if(lastTimeId!=-1) timeStr += end_time.toString()+",";
                 switch(timeslot.getDay()) {
                     case 1: timeStr += "周一 "; break;
